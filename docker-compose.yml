@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  morph:
+    user: root
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - GO_VERSION=${GO_VERSION}
+        - ROOT_DIR=${ROOT_DIR}
+        - JWT_FILE_NAME=${JWT_FILE_NAME}
+        - NODE_DATA_DIR=${NODE_DATA_DIR}
+        - NETWORK_ID=${NETWORK_ID}
+        - HTTP_PORT=${HTTP_PORT}
+        - WS_PORT=${WS_PORT}
+        - AUTH_RPC_PORT=${AUTH_RPC_PORT}
+        - METRICS_PORT=${METRICS_PORT}
+        - Ethereum_Holesky_RPC=${Ethereum_Holesky_RPC}
+        - Your_Validator_Private_Key=${Your_Validator_Private_Key}
+    container_name: morph-validator
+    volumes:
+      - ./node-data:${ROOT_DIR}/node-data/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - '${HTTP_PORT}:${HTTP_PORT}'
+      - '${WS_PORT}:${WS_PORT}'
+
+    restart: on-failure
+volumes:
+  .node-data:
