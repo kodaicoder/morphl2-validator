@@ -72,7 +72,9 @@ if ! ps -p $GETH_PID > /dev/null; then
     echo "############# geth.log #############" && \
     cat ${ROOT_DIR}/geth.log && \
     echo "####################################" && \
-    tail -f /dev/null
+    ## this for debugging
+    # tail -f /dev/null
+    exit 1
 else
     echo "go-ethereum started successfully with PID $GETH_PID"
     echo "Starting validator node..."
@@ -87,12 +89,16 @@ else
         cat ${ROOT_DIR}/node.log && \
         echo "####################################" && \
         kill $GETH_PID &&\
-        pkill -f geth && \
-        tail -f /dev/null
+        pkill -f geth &&\
+        ## this for debugging
+        # tail -f /dev/null
+        exit 1
     else
         echo "Validator node started successfully with PID $NODE_PID"
+        sleep 5
+        cd ${ROOT_DIR:-/root/.morph} && \
         # Keep the container running
-        tail -f logs/node.log
+        tail -f node.log
         #tail -f /dev/null
         #tail -f geth.log node.log
     fi
