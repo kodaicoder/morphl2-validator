@@ -1,28 +1,4 @@
 #!/bin/bash
-# Function to mask the RPC URL
-mask_rpc_url() {
-    local url=$1
-    # Check if the URL contains '/v2/'
-    if [[ $url == *"/v2/"* ]]; then
-        local base_url=$(echo $url | sed -E 's/(.+\/v2\/).+/\1/')
-        local api_key=$(echo $url | sed -E 's/.+\/v2\/(.+)/\1/')
-    else
-        echo "Debug: URL does not contain '/v2/' pattern" >&2
-        return 1
-    fi
-
-    local api_key_length=${#api_key}
-
-    if [ $api_key_length -ge 8 ]; then
-        local visible_chars=8
-        local mask_length=$((api_key_length - visible_chars))
-        local masked_api_key="${api_key:0:4}$(printf '*%.0s' $(seq 1 $mask_length))${api_key: -4}"
-        echo "${base_url}${masked_api_key}"
-    else
-        echo "Debug: API key too short to mask" >&2
-        echo $url
-    fi
-}
 
 # Function to mask the private key
 mask_private_key() {
@@ -46,11 +22,9 @@ echo "HTTP_PORT=$HTTP_PORT"
 echo "WS_PORT=$WS_PORT"
 echo "AUTH_RPC_PORT=$AUTH_RPC_PORT"
 echo "METRICS_PORT=$METRICS_PORT"
-# Special handling for RPC
-if [ ! -z "$Ethereum_Holesky_RPC" ]; then
-    masked_rpc=$(mask_rpc_url "$Ethereum_Holesky_RPC")
-    echo "Ethereum_Holesky_RPC=$masked_rpc"
-fi
+echo "Ethereum_Holesky_RPC=$Ethereum_Holesky_RPC"
+echo "Ethereum_Holesky_BEACON_RPC=$Ethereum_Holesky_BEACON_RPC"
+
 # Special handling for PRIVATE_KEY
 if [ ! -z "$Your_Validator_Private_Key" ]; then
     masked_key=$(mask_private_key "$Your_Validator_Private_Key")
@@ -73,8 +47,8 @@ if ! ps -p $GETH_PID > /dev/null; then
     cat ${ROOT_DIR}/geth.log && \
     echo "####################################" && \
     ## this for debugging
-    # tail -f /dev/null
-    exit 1
+     tail -f /dev/null
+    # exit 1
 else
     echo "go-ethereum started successfully with PID $GETH_PID"
     echo "Starting validator node..."
@@ -91,8 +65,8 @@ else
         kill $GETH_PID &&\
         pkill -f geth &&\
         ## this for debugging
-        # tail -f /dev/null
-        exit 1
+         tail -f /dev/null
+        #exit 1
     else
         echo "Validator node started successfully with PID $NODE_PID"
         sleep 5

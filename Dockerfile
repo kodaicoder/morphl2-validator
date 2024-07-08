@@ -23,11 +23,12 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p ${ROOT_DIR} && \
     cd ${ROOT_DIR} && \
     git clone https://github.com/morph-l2/morph.git  && \
-    cd morph && \
+    cd morph  && \
     git checkout v0.1.0-beta
 
 # Build go-ethereum
-RUN make nccc_geth
+RUN cd ${ROOT_DIR}/morph && \
+    make nccc_geth
 
 # Build Node
 RUN cd ${ROOT_DIR}/morph/node && \
