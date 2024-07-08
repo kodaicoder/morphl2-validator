@@ -65,12 +65,8 @@ after you in morphl2-validator directory then you can start editing `.env` file 
 nano .env
 ```
 
-and then you will see 2 lines that end with XXXXXXX
-
-- first line is `Ethereum_Holesky_RPC` you can grab one of rpc endpoint [here](https://www.alchemy.com/)
-  then you can replace it
-
-- second line is `Your_Validator_Private_Key` is your wallet private key that want to run a node
+and then you will see line that end with XXXXXXX
+just replacing it with your wallet private key that want to run a node
 
 then save & exit by press <kbd>Ctrl</kbd> + <kbd>X</kbd>
 
