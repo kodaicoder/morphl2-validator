@@ -2,7 +2,6 @@
 
 cd ${ROOT_DIR:-/root/.morph} && \
 
-
 nohup ./morph/go-ethereum/build/bin/geth \
 --datadir=./geth-data \
 --verbosity=3 \

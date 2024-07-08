@@ -9,8 +9,8 @@ nohup ./morph/node/build/bin/morphnode --validator --home ./node-data \
      --l2.jwt-secret ${ROOT_DIR:-/root/.morph}/${JWT_FILE_NAME:-jwt-secret.txt} \
      --l2.eth http://localhost:${HTTP_PORT:-8545} \
      --l2.engine http://localhost:${AUTH_RPC_PORT:-8551} \
-     --l1.rpc $(Ethereum Holesky RPC)  \
-     --l1.beaconrpc ${Ethereum_Holesky_RPC}  \
+     --l1.rpc $(Ethereum_Holesky_RPC)  \
+     --l1.beaconrpc ${Ethereum_Holesky_BEACON_RPC}  \
      --l1.chain-id  17000   \
      --validator.privateKey ${Your_Validator_Private_Key} \
      --sync.depositContractAddr $(L1MessageQueueWithGasPriceOracle) \
