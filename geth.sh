@@ -2,7 +2,8 @@
 
 cd ${ROOT_DIR:-/root/.morph} && \
 
-nohup ./go-ethereum/build/bin/geth \
+
+nohup ./morph/go-ethereum/build/bin/geth \
 --datadir=./geth-data \
 --verbosity=3 \
 --http \
@@ -16,7 +17,7 @@ nohup ./go-ethereum/build/bin/geth \
 --ws.port=${WS_PORT:-8546} \
 --ws.origins="*" \
 --ws.api=web3,eth,txpool,net,engine \
---networkid=${NETWORK_ID:-2710} \
+--networkid=${NETWORK_ID:-2810} \
 --authrpc.addr="0.0.0.0" \
 --authrpc.port "${AUTH_RPC_PORT:-8551}" \
 --authrpc.vhosts="*" \
