@@ -3,7 +3,7 @@
 cd ${ROOT_DIR:-/root/.morph} && \
 
 nohup ./morph/go-ethereum/build/bin/geth \
---datadir=./geth-data \
+--datadir=${ROOT_DIR:-/root/.morph}/geth-data \
 --verbosity=3 \
 --http \
 --http.corsdomain="*" \
@@ -25,4 +25,5 @@ nohup ./morph/go-ethereum/build/bin/geth \
 --metrics \
 --metrics.addr=0.0.0.0 \
 --metrics.port=${METRICS_PORT:-6060} \
---miner.gasprice="100000000"
+--miner.gasprice="100000000" \
+--maxpeers=50

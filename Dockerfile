@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y \
     unzip \
     openssl \
     golang-go \
-    jq
+    jq \
+    nano
 
 # Clone morph-l2 repositories & check out on V0.1.0-beta
 RUN mkdir -p ${ROOT_DIR} && \
