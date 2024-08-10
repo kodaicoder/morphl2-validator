@@ -25,7 +25,9 @@ RUN mkdir -p ${ROOT_DIR} && \
     cd ${ROOT_DIR} && \
     git clone https://github.com/morph-l2/morph.git  && \
     cd morph  && \
-    git checkout v0.1.0-beta
+    git checkout v0.2.0-beta
+
+## uncompress package
 
 # Build go-ethereum
 RUN cd ${ROOT_DIR}/morph && \
@@ -48,14 +50,23 @@ RUN cd ${ROOT_DIR} && \
     echo cat ${JWT_FILE_NAME} && \
     echo "###########################################"
 
-# Copy geth and node script
+# Download Snapshot
+RUN cd ${ROOT_DIR} && \
+    wget -q --show-progress https://snapshot.morphl2.io/holesky/snapshot-20240805-1.tar.gz && \
+    tar -xvf snapshot-20240805-1.tar.gz && \
+    rm -f snapshot-20240805-1.tar.gz && \
+    mv snapshot-20240805-1/geth geth-data && \
+    mv snapshot-20240805-1/data node-data
+
+# Copy start, geth and node script
+COPY start.sh /start.sh
 COPY geth.sh /geth.sh
 COPY node.sh /node.sh
+
+
+# Run geth, node and start script
 RUN chmod +x /geth.sh
 RUN chmod +x /node.sh
-
-# Copy the start script
-COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
 # Expose necessary ports
